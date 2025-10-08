@@ -1,0 +1,21 @@
+:root {
+  /* Custom Color Palette */
+  --primary-blue: #2563EB;
+  --primary-purple: #7C3AED;
+  --success-green: #10B981;
+  --warning-orange: #F59E0B;
+  --error-red: #EF4444;
+
+  /* Text Colors */
+  --text-primary: #1a1a1a;
+  --text-secondary: #2d2d2d;
+
+  /* Common Border Radius */
+  --border-radius: 0.5rem;
+
+  /* Common Border */
+  --border-common: 1px solid #e5e5e5;
+
+  /* Common Box Shadow */
+  --box-shadow-common: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
