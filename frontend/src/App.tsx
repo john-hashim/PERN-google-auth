@@ -1,9 +1,13 @@
 import './App.css'
 import Login from '@/feature/auth/Login'
-import UiCustomizer from '@/feature/ui-customizer/UiCustomizer'
+import ChatbotDesign from '@/feature/chatbot-design/ChatbotDesign'
+import Messages from '@/feature/messages/Messages'
+import KnowledgeBase from '@/feature/knowledge-base/KnowledgeBase'
+import Settings from '@/feature/settings/Settings'
 import { Routes, Route, Navigate } from 'react-router-dom'
 import { GoogleOAuthProvider } from '@react-oauth/google'
 import { ProtectedRoute } from '@/routes/ProtectedRoute'
+import { MainLayout } from '@/components/layout/MainLayout'
 import { useUserStore } from '@/store/userStore'
 
 function App() {
@@ -25,21 +29,25 @@ function AppRoutes() {
     <Routes>
       <Route
         path="/login"
-        element={token ? <Navigate to="/ui-customizer" replace /> : <Login />}
+        element={token ? <Navigate to="/chatbot-design" replace /> : <Login />}
       />
       <Route
-        path="/ui-customizer"
         element={
           <ProtectedRoute>
-            <UiCustomizer />
+            <MainLayout />
           </ProtectedRoute>
         }
-      />
+      >
+        <Route path="/chatbot-design" element={<ChatbotDesign />} />
+        <Route path="/messages" element={<Messages />} />
+        <Route path="/knowledge-base" element={<KnowledgeBase />} />
+        <Route path="/settings" element={<Settings />} />
+      </Route>
       <Route
         path="/"
         element={
           token ? (
-            <Navigate to="/ui-customizer" replace />
+            <Navigate to="/chatbot-design" replace />
           ) : (
             <Navigate to="/login" replace />
           )
