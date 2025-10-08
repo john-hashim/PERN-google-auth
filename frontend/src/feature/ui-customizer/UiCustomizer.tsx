@@ -1,8 +1,23 @@
 import { useUserStore } from '@/store/userStore'
+import { authService } from '@/api/services/auth'
+import { useApi } from '@/hooks/useApi'
 
 const UiCustomizer = () => {
   const user = useUserStore(state => state.user)
-  const logout = useUserStore(state => state.logout)
+  const logoutStore = useUserStore(state => state.logout)
+
+  const { execute: executeLogout, loading } = useApi<{ message: string }, []>(authService.logout)
+
+  const handleLogout = async () => {
+    try {
+      await executeLogout()
+      logoutStore()
+    } catch (error) {
+      console.error('Logout failed:', error)
+      // Clear state even if API fails
+      logoutStore()
+    }
+  }
 
   return (
     <div className="min-h-screen bg-gray-50 p-6">
@@ -11,10 +26,11 @@ const UiCustomizer = () => {
           <div className="flex justify-between items-center mb-6">
             <h1 className="text-2xl font-bold">UI Customizer</h1>
             <button
-              onClick={logout}
-              className="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition-colors"
+              onClick={handleLogout}
+              disabled={loading}
+              className="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              Logout
+              {loading ? 'Logging out...' : 'Logout'}
             </button>
           </div>
 

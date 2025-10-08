@@ -21,4 +21,12 @@ export const authService = {
   googleSignIn: (data: GoogleSignInRequest): Promise<AxiosResponse<AuthResponse>> => {
     return apiClient.post(ENDPOINTS.AUTH.GOOGLE.SIGNIN, data)
   },
+
+  /**
+   * Logout user and delete session
+   * @returns Promise with success message
+   */
+  logout: (): Promise<AxiosResponse<{ message: string }>> => {
+    return apiClient.post(ENDPOINTS.AUTH.LOGOUT)
+  },
 }

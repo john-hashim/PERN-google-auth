@@ -23,6 +23,26 @@ const createSession = async (userId: string) => {
   return session
 }
 
+export const logout = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const session = req.session
+
+    if (!session) {
+      res.status(400).json({ message: 'No session found' })
+      return
+    }
+
+    await prisma.session.delete({
+      where: { id: session.id },
+    })
+
+    res.status(200).json({ message: 'Logged out successfully' })
+  } catch (error) {
+    console.error('Logout error:', error)
+    res.status(500).json({ message: 'Error during logout' })
+  }
+}
+
 export const googleSignIn = async (req: Request, res: Response): Promise<void> => {
   try {
     const { credential } = req.body
