@@ -1,10 +1,28 @@
+import { authService } from '@/api/services/auth'
+import { useApi } from '@/hooks/useApi'
+import type { AuthResponse, GoogleSignInRequest } from '@/types/auth'
 import { GoogleLogin, type CredentialResponse } from '@react-oauth/google'
 
 const Login: React.FC = () => {
+  const { execute: executeGoogleSignIn } = useApi<AuthResponse, [GoogleSignInRequest]>(
+    authService.googleSignIn
+  )
+
   const handleGoogleSuccess = async (credentialResponse: CredentialResponse) => {
     if (!credentialResponse.credential) {
       console.log('Failed to get Google credentials')
       return
+    }
+    try {
+      const response = await executeGoogleSignIn({
+        credential: credentialResponse.credential,
+      })
+
+      if (response && response.token) {
+        console.log(response)
+      }
+    } catch (err) {
+      console.error('Google login failed:', err)
     }
     console.log(credentialResponse.credential)
   }
