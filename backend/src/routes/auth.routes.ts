@@ -7,6 +7,4 @@ const router = express.Router()
 
 router.post('/google/signin', authController.googleSignIn)
 
-router.get('/token-check', authMiddleware.authenticateToken, authController.tokenCheck)
-
 export default router

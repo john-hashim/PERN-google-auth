@@ -9,8 +9,6 @@ const Login: React.FC = () => {
     authService.googleSignIn
   )
 
-  const { execute: excuteTokenCheck } = useApi<{ data: string }, []>(authService.tokenCheck)
-
   const userStore = useUserStore()
 
   const handleGoogleSuccess = async (credentialResponse: CredentialResponse) => {
@@ -33,30 +31,29 @@ const Login: React.FC = () => {
     console.log('Google sign-in failed. Please try again.')
   }
 
-  const checkToken = () => {
-    excuteTokenCheck()
-  }
-
-  const handleLogout = () => {
-    userStore.logout()
-  }
-
   return (
-    <div>
-      <div className="w-full flex items-center justify-center max-w-[384px]">
-        <GoogleLogin
-          onSuccess={handleGoogleSuccess}
-          onError={handleGoogleError}
-          theme="filled_black"
-          size="medium"
-          width={200}
-          shape="rectangular"
-          useOneTap
-          auto_select={false}
-        />
+    <div className="min-h-screen flex items-center justify-center bg-gray-50">
+      <div className="w-full max-w-md px-6">
+        <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-8">
+          <div className="text-center mb-8">
+            <h1 className="text-2xl font-semibold text-gray-900 mb-2">Welcome</h1>
+            <p className="text-sm text-gray-600">Sign in to continue</p>
+          </div>
+
+          <div className="flex justify-center">
+            <GoogleLogin
+              onSuccess={handleGoogleSuccess}
+              onError={handleGoogleError}
+              theme="outline"
+              size="large"
+              width={320}
+              shape="rectangular"
+              useOneTap
+              auto_select={false}
+            />
+          </div>
+        </div>
       </div>
-      <button onClick={checkToken}>check token</button>
-      <button onClick={handleLogout}>logout</button>
     </div>
   )
 }

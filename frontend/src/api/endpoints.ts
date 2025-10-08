@@ -5,7 +5,6 @@ export const ENDPOINTS = {
     GOOGLE: {
       SIGNIN: '/auth/google/signin', // POST - API-based Google sign-in
     },
-    token_check: '/auth/token-check',
   },
 } as const
 

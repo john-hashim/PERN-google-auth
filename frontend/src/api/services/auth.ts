@@ -21,8 +21,4 @@ export const authService = {
   googleSignIn: (data: GoogleSignInRequest): Promise<AxiosResponse<AuthResponse>> => {
     return apiClient.post(ENDPOINTS.AUTH.GOOGLE.SIGNIN, data)
   },
-
-  tokenCheck: (): Promise<AxiosResponse<{ data: string }>> => {
-    return apiClient.get(ENDPOINTS.AUTH.token_check)
-  },
 }
