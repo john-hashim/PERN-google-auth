@@ -1,10 +1,10 @@
 :root {
   /* Custom Color Palette */
-  --primary-blue: #2563EB;
-  --primary-purple: #7C3AED;
-  --success-green: #10B981;
-  --warning-orange: #F59E0B;
-  --error-red: #EF4444;
+  --primary-blue: #2563eb;
+  --primary-purple: #7c3aed;
+  --success-green: #10b981;
+  --warning-orange: #f59e0b;
+  --error-red: #ef4444;
 
   /* Text Colors */
   --text-primary: #1a1a1a;
@@ -18,4 +18,29 @@
 
   /* Common Box Shadow */
   --box-shadow-common: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+/* Global text element animations */
+div,
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+span,
+a,
+section,
+article,
+nav,
+header,
+footer,
+aside,
+main,
+label,
+li,
+td,
+th {
+  @apply animate-in fade-in duration-300;
 }
