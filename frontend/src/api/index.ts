@@ -5,6 +5,7 @@ import axios, {
   type AxiosResponse,
   AxiosError,
 } from 'axios'
+import { useUserStore } from '@/store/userStore'
 
 const BASE_URL = import.meta.env.VITE_API_URL
 
@@ -19,9 +20,10 @@ const apiClient: AxiosInstance = axios.create({
 // Request interceptor for adding auth token
 apiClient.interceptors.request.use(
   (config: InternalAxiosRequestConfig): InternalAxiosRequestConfig => {
-    const token = localStorage.getItem('token') || sessionStorage.getItem('token')
+    const token = useUserStore.getState().token
+    console.log(token)
     if (token && config.headers) {
-      config.headers.Authorization = `token ${token}`
+      config.headers.Authorization = `Bearer ${token}`
     }
     return config
   },
@@ -35,8 +37,7 @@ apiClient.interceptors.response.use(
     if (error.response?.status === 401) {
       const isLoginEndpoint = error.config?.url?.includes('/auth/login')
       if (!isLoginEndpoint) {
-        localStorage.removeItem('token')
-        sessionStorage.removeItem('token')
+        useUserStore.getState().logout()
       }
     }
     return Promise.reject(error)

@@ -1,4 +1,4 @@
-export interface UserResponse {
+export interface User {
   id: string
   email: string
   name: string
@@ -6,7 +6,7 @@ export interface UserResponse {
 }
 
 export interface AuthResponse {
-  user: UserResponse
+  user: User
   message: string
   token: string
   isNewUser: boolean

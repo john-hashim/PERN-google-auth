@@ -99,3 +99,7 @@ export const googleSignIn = async (req: Request, res: Response): Promise<void> =
     res.status(500).json({ message: 'Error processing Google sign-in' })
   }
 }
+
+export const tokenCheck = async (req: Request, res: Response): Promise<void> => {
+  res.status(200).json({ data: 'auth success' })
+}

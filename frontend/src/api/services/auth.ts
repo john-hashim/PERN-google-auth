@@ -2,14 +2,14 @@
 import { type AxiosResponse } from 'axios'
 import apiClient from '../index'
 import { ENDPOINTS } from '../endpoints'
-import type { AuthResponse, GoogleSignInRequest, UserResponse } from '@/types/auth'
+import type { AuthResponse, GoogleSignInRequest, User } from '@/types/auth'
 
 export const authService = {
   /**
    * Get current user profile
    * @returns Promise with user data
    */
-  getMe: (): Promise<AxiosResponse<UserResponse>> => {
+  getMe: (): Promise<AxiosResponse<User>> => {
     return apiClient.get(ENDPOINTS.AUTH.GET_ME)
   },
 
@@ -20,5 +20,9 @@ export const authService = {
    */
   googleSignIn: (data: GoogleSignInRequest): Promise<AxiosResponse<AuthResponse>> => {
     return apiClient.post(ENDPOINTS.AUTH.GOOGLE.SIGNIN, data)
+  },
+
+  tokenCheck: (): Promise<AxiosResponse<{ data: string }>> => {
+    return apiClient.get(ENDPOINTS.AUTH.token_check)
   },
 }

@@ -1,5 +1,6 @@
 import { authService } from '@/api/services/auth'
 import { useApi } from '@/hooks/useApi'
+import { useRootStore } from '@/store/rootStore'
 import type { AuthResponse, GoogleSignInRequest } from '@/types/auth'
 import { GoogleLogin, type CredentialResponse } from '@react-oauth/google'
 
@@ -7,6 +8,10 @@ const Login: React.FC = () => {
   const { execute: executeGoogleSignIn } = useApi<AuthResponse, [GoogleSignInRequest]>(
     authService.googleSignIn
   )
+
+  const { execute: excuteTokenCheck } = useApi<{ data: string }, []>(authService.tokenCheck)
+
+  const { user } = useRootStore()
 
   const handleGoogleSuccess = async (credentialResponse: CredentialResponse) => {
     if (!credentialResponse.credential) {
@@ -17,18 +22,23 @@ const Login: React.FC = () => {
       const response = await executeGoogleSignIn({
         credential: credentialResponse.credential,
       })
-
-      if (response && response.token) {
-        console.log(response)
-      }
+      user.setUser(response.user)
+      user.setToken(response.token)
     } catch (err) {
       console.error('Google login failed:', err)
     }
-    console.log(credentialResponse.credential)
   }
 
   const handleGoogleError = () => {
     console.log('Google sign-in failed. Please try again.')
+  }
+
+  const checkToken = () => {
+    excuteTokenCheck()
+  }
+
+  const handleLogout = () => {
+    user.logout()
   }
 
   return (
@@ -45,6 +55,8 @@ const Login: React.FC = () => {
           auto_select={false}
         />
       </div>
+      <button onClick={checkToken}>check token</button>
+      <button onClick={handleLogout}>logout</button>
     </div>
   )
 }
